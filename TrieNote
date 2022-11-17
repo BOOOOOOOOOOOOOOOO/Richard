@@ -1,0 +1,66 @@
+
+class TrieNode{
+  noolean isWord;
+  TrieNode[] children;
+  
+  public TrieNode(){
+    isWord=false;
+    children=new TrieNode[26];
+  }
+}
+
+
+前綴樹的構建:
+//dingyi 節點
+class TrieNode{
+  boolean isWord;
+  TrieNode[] children=new TrieNode[26];
+}
+//dingyi 前綴樹
+class Trie{
+  TrieNode root;
+  public Trie(){
+    TrieNode root;
+    public Trie(){
+      root=new TrieNode();
+    }
+  }
+}
+
+1.insert()
+public void insert(String word){
+  TrieNode cur=root;
+  for(int i=0;i<work.length();i++){
+    int idx=word.charAt(i)-'a';
+    //如果當前節點的值為idx的孩子節點不存在，則新建孩子節點並指向它
+    if(cur.children(idx)==null){
+      cur.children[idx]=new TrieNode();
+    }
+    //如果當前節點的值為idx的孩子節點存在，則cur指向該孩子節點
+    cur=cur.children[idx];
+  }
+  //儅所有節點都遍歷完成，將當前節點，即最後一個節點的標識符isWord置爲true,表示從根節點遍歷到該節點的字母組成了一個單詞
+  cur.isWord=true;
+}
+
+2.完整查找 search():給一個完整的單詞，在前綴樹中查找它是否存在
+思路：如果在遍历过程中发现字母有缺失（cur.children[c] == null），即下一个字母查找为null，则返回false，表示前缀树种不存在这个单词。如果遍历完成，就要判断此时cur是否为单词末尾：如果是，返回true；如果不是，说明word仅仅是一个前缀，并不完整，返回false
+public boolean search(String word){
+  TrieNode cur=root;
+  for(int i=0;i<word.length();i++){
+    int idx=word.charAt(i)-'a';
+    if(cur.children[idx]==null) return false;
+    cur=cur.children[idx];
+  }
+  return cur.isWord;
+}
+
+3.按前綴查找startsWith()
+public boolean searchStartWith(String word){
+  TrieNode cir=root;
+  for(int i=0;i<word.length();i++){
+    int idx=word.charAt(i)-'a';
+    if(cur.children[idx]==null) return false;
+  }
+  return true;
+}
